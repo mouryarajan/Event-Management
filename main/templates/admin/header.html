@@ -1,0 +1,295 @@
+{% load static %}
+<div id="preloader">
+    <div id="status">
+        <div class="spinner"></div>
+    </div>
+</div>
+<div class="header-bg">
+    <!-- Navigation Bar-->
+    <header id="topnav">
+        <!-- end topbar-main --><!-- MENU Start -->
+        {% if request.user.is_superuser  %}
+        <div class="topbar-main">
+            <div class="container-fluid">
+                <!-- Logo-->
+                <div class="d-block d-lg-none mr-5"><a href="/admin/" class="logo"><img src="{% static 'admin_plugins/images/favicon.png' %}" alt="" height="28" class="logo-small"></a></div>
+                <!-- End Logo-->
+                <div class="menu-extras topbar-custom navbar p-0">
+                    <!-- Search input -->
+                    <div class="search-wrap" id="search-wrap">
+                        <div class="search-bar"><input class="search-input" type="search" placeholder="Search"> <a href="#" class="close-search toggle-search" data-target="#search-wrap"><i class="mdi mdi-close-circle"></i></a></div>
+                    </div>
+                    <ul class="list-inline ml-auto mb-0">
+                        <!-- notification-->
+                        
+                        <li class="list-inline-item dropdown notification-list">
+                            <a class="nav-link dropdown-toggle arrow-none waves-effect" href="/admin/notification/" role="button" aria-haspopup="false" aria-expanded="false"><i class="mdi mdi-bell-outline noti-icon"></i> 
+                                <!-- <span class="badge badge-info badge-pill noti-icon-badge">3</span> -->
+                            </a>
+                        </li>
+                        <!-- User-->
+                        <li class="list-inline-item dropdown notification-list">
+                            <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"><img src="{% static 'admin_plugins/images/favicon.png' %}" alt="user" class="rounded-circle"> <span class="d-none d-md-inline-block ml-1">{{admin_data.AdminUserName}} <i class="mdi mdi-chevron-down"></i></span></a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown">
+                                <a class="dropdown-item" href="#"><i class="dripicons-user text-muted"></i> Profile</a> 
+                                <a class="dropdown-item" href="{% url 'logout' %}"><i class="dripicons-exit text-muted"></i>Logout</a>
+                            </div>
+                        </li>
+                        <li class="menu-item list-inline-item">
+                            <!-- Mobile menu toggle--> 
+                            <a class="navbar-toggle nav-link">
+                                <div class="lines"><span></span> <span></span> <span></span></div>
+                            </a>
+                            <!-- End mobile menu toggle-->
+                        </li>
+                    </ul>
+                </div>
+                <!-- end menu-extras -->
+                <div class="clearfix"></div>
+            </div>
+            <!-- end container -->
+        </div>
+        <div class="navbar-custom">
+            <div class="container-fluid">
+                <!-- Logo-->
+                <div class="d-none d-lg-block">
+                    <a href="/admin/" class="logo">
+                        <img src="{% static 'admin_plugins/images/logo.png' %}" alt="" height="20" class="logo-large">
+                    </a>
+                </div>
+                <!-- End Logo-->
+                
+                <div id="navigation">
+                    <!-- Navigation Menu-->
+                    <ul class="navigation-menu">
+                        <li class="has-submenu"><a href="/admin/"><i class="dripicons-meter"></i>Dashboard</a></li>
+                        <li class="has-submenu">
+                            <a href="#"><i class="mdi mdi-city"></i>College<i class="mdi mdi-chevron-down mdi-drop"></i></a>
+                            <ul class="submenu megamenu">
+                                <li>
+                                    <ul>
+                                        <li><a href="#"><strong>Department</strong></a></li>
+                                        <li><a href="/admin/department/add/">Add department</a></li>
+                                        <li><a href="/admin/department/">View department</a></li>
+
+                                        <li><a href="#"><strong>Sub department</strong></a></li>
+                                        <li><a href="/admin/subdepartment/add/">Add sub department</a></li>
+                                        <li><a href="/admin/subdepartment/">View sub department</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <ul>
+                                        <li><a href="#"><strong>Venue</strong></a></li>
+                                        <li><a href="/admin/venue/add/">Add venue</a></li>
+                                        <li><a href="/admin/venue/">View venue</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="#"><i class="dripicons-user"></i>Employee<i class="mdi mdi-chevron-down mdi-drop"></i></a>
+                            <ul class="submenu">
+                                <li><a href="/admin/employee/add/">Add employee</a></li>
+                                <li><a href="/admin/employee/">View employee</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu"> <a href="/admin/student/"><i class="ti-user"></i>Student</a></li>
+                        <li class="has-submenu"> <a href="/admin/club/"><i class="ti-crown"></i>Club</a></li>
+                        
+                        <li class="has-submenu">
+                            <a href="#"><i class="mdi mdi-calendar-clock"></i>Event<i class="mdi mdi-chevron-down mdi-drop"></i></a>
+                            <ul class="submenu">
+                                
+                                <li><a href="/admin/event/">View event</a></li>
+                                <li><a href="/admin/event/calendar/">View calendar</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="#"><i class="dripicons-trophy"></i>Achievement<i class="mdi mdi-chevron-down mdi-drop"></i></a>
+                            <ul class="submenu">
+                                <li><a href="/admin/achievement/">View achievement</a></li>
+                                <li><a href="/admin/achiever/">View achiever</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- End navigation menu -->
+                </div>
+            </div>
+            <!-- end container -->
+        </div>
+        {% endif %}
+
+        {% for group in request.user.groups.all %}
+        {% if "subAdmin" in group.name %}
+        <div class="topbar-main">
+            <div class="container-fluid">
+                <!-- Logo-->
+                <div class="d-block d-lg-none mr-5"><a href="/admin/" class="logo"><img src="{% static 'admin_plugins/images/favicon.png' %}" alt="" height="28" class="logo-small"></a></div>
+                <!-- End Logo-->
+                <div class="menu-extras topbar-custom navbar p-0">
+                    <!-- Search input -->
+                    <div class="search-wrap" id="search-wrap">
+                        <div class="search-bar"><input class="search-input" type="search" placeholder="Search"> <a href="#" class="close-search toggle-search" data-target="#search-wrap"><i class="mdi mdi-close-circle"></i></a></div>
+                    </div>
+                    <ul class="list-inline ml-auto mb-0">
+                        <!-- notification-->
+                        
+                        <li class="list-inline-item dropdown notification-list">
+                            <a class="nav-link dropdown-toggle arrow-none waves-effect" href="/admin/requests/" role="button" aria-haspopup="false" aria-expanded="false"><i class="mdi mdi-email-outline noti-icon"></i> 
+                                <!-- <span class="badge badge-info badge-pill noti-icon-badge">3</span> -->
+                            </a>
+                        </li>
+                        <!-- User-->
+                        <li class="list-inline-item dropdown notification-list">
+                            <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"><img src="{{ request.user.employee.EmployeeImage}}" alt="user" class="rounded-circle"> <span class="d-none d-md-inline-block ml-1">{{request.user.first_name}} {{request.user.last_name}}<i class="mdi mdi-chevron-down"></i></span></a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown">
+                                <a class="dropdown-item" href="#"><i class="dripicons-user text-muted"></i> Profile</a> 
+                                <a class="dropdown-item" href="{% url 'logout' %}"><i class="dripicons-exit text-muted"></i>Logout</a>
+                            </div>
+                        </li>
+                        <li class="menu-item list-inline-item">
+                            <!-- Mobile menu toggle--> 
+                            <a class="navbar-toggle nav-link">
+                                <div class="lines"><span></span> <span></span> <span></span></div>
+                            </a>
+                            <!-- End mobile menu toggle-->
+                        </li>
+                    </ul>
+                </div>
+                <!-- end menu-extras -->
+                <div class="clearfix"></div>
+            </div>
+            <!-- end container -->
+        </div>
+        <div class="navbar-custom">
+            <div class="container-fluid">
+                <!-- Logo-->
+                <div class="d-none d-lg-block">
+                    <!-- Text Logo
+                        <a href="index.html" class="logo">
+                            Foxia
+                        </a>
+                         --><!-- Image Logo --> 
+                    <a href="/subadmin/" class="logo">
+                        <!-- <img src="{% static 'admin_plugins/images/logo-sm.png' %}" alt="" height="22" class="logo-small"> --> <img src="{% static 'admin_plugins/images/logo.png' %}" alt="" height="20" class="logo-large">
+                    </a>
+                </div>
+                <!-- End Logo-->
+                
+                <div id="navigation">
+                    <!-- Navigation Menu-->
+                    <ul class="navigation-menu">
+                        <li class="has-submenu"><a href="/subadmin/"><i class="dripicons-meter"></i>Dashboard</a></li>
+                        <li class="has-submenu"> <a href="/admin/student/"><i class="ti-user"></i>Student</a></li>
+                        <li class="has-submenu"> <a href="/admin/club/"><i class="ti-crown"></i>Club</a></li>
+                        
+                        <li class="has-submenu">
+                            <a href="#"><i class="mdi mdi-calendar-clock"></i>Event<i class="mdi mdi-chevron-down mdi-drop"></i></a>
+                            <ul class="submenu">
+                                
+                                <li><a href="/admin/event/">View event</a></li>
+                                <li><a href="/admin/event/calendar/">View calendar</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="#"><i class="dripicons-trophy"></i>Achievement<i class="mdi mdi-chevron-down mdi-drop"></i></a>
+                            <ul class="submenu">
+                                <li><a href="#"><strong>Achievement</strong></a></li>
+                                <li><a href="/admin/achievement/add/">Add achievement</a></li>
+                                <li><a href="/admin/achievement/">View achievement</a></li>
+
+                                <li><a href="#"><strong>Achiever</strong></a></li>
+                                <li><a href="/admin/achiever/add/">Add achiever</a></li>
+                                <li><a href="/admin/achiever/">View achiever</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- End navigation menu -->
+                </div>
+            </div>
+            <!-- end container -->
+        </div>
+        {% endif %}
+
+        {% if "clubAdmin" in group.name %}
+        <div class="topbar-main">
+            <div class="container-fluid">
+                <!-- Logo-->
+                <div class="d-block d-lg-none mr-5"><a href="/admin/" class="logo"><img src="{% static 'admin_plugins/images/favicon.png' %}" alt="" height="28" class="logo-small"></a></div>
+                <!-- End Logo-->
+                <div class="menu-extras topbar-custom navbar p-0">
+                    <!-- Search input -->
+                    <div class="search-wrap" id="search-wrap">
+                        <div class="search-bar"><input class="search-input" type="search" placeholder="Search"> <a href="#" class="close-search toggle-search" data-target="#search-wrap"><i class="mdi mdi-close-circle"></i></a></div>
+                    </div>
+                    <ul class="list-inline ml-auto mb-0">
+                        <!-- notification-->
+                        
+                        <li class="list-inline-item dropdown notification-list">
+                            <a class="nav-link dropdown-toggle arrow-none waves-effect" href="/admin/requests/" role="button" aria-haspopup="false" aria-expanded="false"><i class="mdi mdi-email-outline noti-icon"></i> 
+                                <!-- <span class="badge badge-info badge-pill noti-icon-badge">3</span> -->
+                            </a>
+                        </li>
+                        <!-- User-->
+                        <li class="list-inline-item dropdown notification-list">
+                            <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"><img src="{{ request.user.club.ClubImage}}" alt="user" class="rounded-circle"> <span class="d-none d-md-inline-block ml-1">{{request.user.club.ClubName}} <i class="mdi mdi-chevron-down"></i></span></a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown">
+                            
+                                <a class="dropdown-item" href=""><i class="dripicons-user text-muted"></i> Profile</a> 
+                                <a class="dropdown-item" href="{% url 'logout' %}"><i class="dripicons-exit text-muted"></i>Logout</a>
+                            </div>
+                        </li>
+                        <li class="menu-item list-inline-item">
+                            <!-- Mobile menu toggle--> 
+                            <a class="navbar-toggle nav-link">
+                                <div class="lines"><span></span> <span></span> <span></span></div>
+                            </a>
+                            <!-- End mobile menu toggle-->
+                        </li>
+                    </ul>
+                </div>
+                <!-- end menu-extras -->
+                <div class="clearfix"></div>
+            </div>
+            <!-- end container -->
+        </div>
+        <div class="navbar-custom">
+            <div class="container-fluid">
+                <!-- Logo-->
+                <div class="d-none d-lg-block">
+                    <!-- Text Logo
+                        <a href="index.html" class="logo">
+                            Foxia
+                        </a>
+                         --><!-- Image Logo --> 
+                    <a href="/clubadmin/" class="logo">
+                        <!-- <img src="{% static 'admin_plugins/images/logo-sm.png' %}" alt="" height="22" class="logo-small"> --> <img src="{% static 'admin_plugins/images/logo.png' %}" alt="" height="20" class="logo-large">
+                    </a>
+                </div>
+                <!-- End Logo-->
+                
+                <div id="navigation">
+                    <!-- Navigation Menu-->
+                    <ul class="navigation-menu">
+                        <li class="has-submenu"><a href="/clubadmin/"><i class="dripicons-meter"></i>Dashboard</a></li>
+                        <li class="has-submenu"> <a href="/clubadmin/clubmember/"><i class="ti-user"></i>Club member</a></li>
+                        <li class="has-submenu">
+                            <a href="#"><i class="mdi mdi-calendar-clock"></i>Event<i class="mdi mdi-chevron-down mdi-drop"></i></a>
+                            <ul class="submenu">
+                                
+                                <li><a href="/admin/event/add">Add event</a></li>
+                                <li><a href="/admin/event/">View event</a></li>
+                                <li><a href="/admin/event/calendar/">View calendar</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu"> <a href="/admin/event/eventmember/"><i class="ti-user"></i>Event member</a></li>
+                    </ul>
+                    <!-- End navigation menu -->
+                </div>
+            </div>
+            <!-- end container -->
+        </div>
+        {% endif %}
+        {% endfor %}
+        <!-- end navbar-custom -->
+    </header>
